@@ -1,0 +1,73 @@
+{
+	"project": {
+		"version": "0.0.1",
+		"name": "Currency Converter",
+		"description": "A Currency Converter For Computer Science",
+		"license": "MIT"
+	},
+	"build": {
+		"profiles": {
+			"public": [
+				{
+					"name": "linux-build",
+					"type": "wildcard+map",
+					"rule-set": {
+						"wildcard-dir": "src/",
+						"wildcard-regex": "./*\\.cpp",
+						"wildcard-format": "src/*",
+						"cache": true,
+						"map-format": "bin/obj/linux/*---o"
+					},
+					"template": "g++ -Ilib/sdl/include -static -c {wildcard} -o {map}",
+					"next-profile": "link-linux-objects",
+					"condition": 0
+				},
+				{
+					"name": "windows-build",
+					"type": "wildcard+map",
+					"rule-set": {
+						"wildcard-dir": "src/",
+						"wildcard-regex": "./*\\.cpp",
+						"wildcard-format": "src/*",
+						"cache": true,
+						"map-format": "bin/obj/windows/*---o"
+					},
+					"template": "x86_64-w64-mingw32-g++ -Ilib/sdl/include -I/usr/x86_64-w64-mingw32/sys-root/mingw/include -static -c {wildcard} -o {map}",
+					"next-profile": "link-windows-objects",
+					"condition": 0
+				}
+			],
+			"private": [
+				{
+					"name": "link-linux-objects",
+					"type": "wildcard",
+					"rule-set": {
+						"directory": "bin/obj/linux",
+						"regex": ".*\\.o",
+						"format": "bin/obj/linux/*",
+						"cache": true
+					},
+					"template": "g++ {wildcard} -Llib/sdl/lib -lSDL3 -o bin/linux/currency_converter",
+					"next-profile": "",
+					"condition": 0
+				},
+				{
+					"name": "link-windows-objects",
+					"type": "wildcard",
+					"rule-set": {
+						"directory": "bin/obj/windows",
+						"regex": ".*\\.o",
+						"format": "bin/obj/windows/*",
+						"cache": true
+					},
+					"template": "x86_64-w64-mingw32-g++ {wildcard} -Llib/sdl/lib -lSDL3 -static-libgcc -static-libstdc++ -mwindows -o bin/windows/currency_converter.exe",
+					"next-profile": "",
+					"condition": 0
+				}
+			]
+		}
+	},
+	"makeup": {
+		"version": "0.0.1"
+	}
+}

@@ -7,8 +7,6 @@
 #include <vector>
 #include <string>
 
-using json = nlohmann::json;
-
 std::string input = "0";
 double input_number = 0;
 double output = 0;
@@ -45,9 +43,9 @@ void InitCurrency(std::string key) {
         curl_easy_cleanup(curl);
     }
 
-    json data = json::parse(response);
+    nlohmann::json data = nlohmann::json::parse(response);
 
-    json::iterator it;
+    nlohmann::json::iterator it;
     for (it = data["conversion_rates"].begin(); it != data["conversion_rates"].end(); it++) {
         double value = it.value().get<double>();
         currency_rates.push_back(value);

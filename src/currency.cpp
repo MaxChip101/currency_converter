@@ -1,11 +1,9 @@
 #include "currency.h"
 
-#include <fstream>
 #include <curl/curl.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <nlohmann/json.hpp>
-#include <print>
 #include <vector>
 #include <string>
 
@@ -41,7 +39,7 @@ void InitCurrency(std::string key) {
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "CurrencyConverter/1.0");
         CURLcode res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
-            std::printf("curl error: %s\n", curl_easy_strerror(res));
+            SDL_Log("curl error: %s\n", curl_easy_strerror(res));
             exit(1);
         }
         curl_easy_cleanup(curl);

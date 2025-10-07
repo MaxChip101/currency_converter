@@ -3,7 +3,6 @@
 #include <SDL3/SDL_main.h>
 #include <string>
 #include <print>
-#include <ctime>
 #include <fstream>
 
 #include "currency.h"
@@ -173,10 +172,6 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
 }
 
 SDL_AppResult SDL_AppIterate(void *appstate) {
-  // logic
-  const Uint64 now = SDL_GetTicks();
-  
-
   // rendering
   RenderBackground(renderer);
   RenderCurrencyLists(renderer);

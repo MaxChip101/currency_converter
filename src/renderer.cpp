@@ -1,7 +1,5 @@
 #include <SDL3/SDL.h>
-#include <cmath>
 #include <string>
-#include <map>
 #include "renderer.h"
 #include "currency.h"
 

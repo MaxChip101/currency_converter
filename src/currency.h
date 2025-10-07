@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <map>
 
 extern std::string input;
 extern double input_number;

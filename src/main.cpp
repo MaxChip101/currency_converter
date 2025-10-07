@@ -12,7 +12,7 @@
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-#define WINDOW_WIDTH 380
+#define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 260
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
@@ -60,7 +60,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
       switch (event->key.scancode) {
         case SDL_SCANCODE_RETURN:
           input_number = std::stod(input);
-          output = input_number * (currency_rates[selected_input_index] / currency_rates[selected_output_index]);
+          output = input_number * (currency_rates[selected_output_index] / currency_rates[selected_input_index]);
           break;
         case SDL_SCANCODE_BACKSPACE:
           input.pop_back();
@@ -183,6 +183,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
   RenderListBorders(renderer);
   RenderNumberInput(renderer);
   RenderNumberOutput(renderer);
+  RenderDetails(renderer);
   SDL_RenderPresent(renderer);
 
   return SDL_APP_CONTINUE;

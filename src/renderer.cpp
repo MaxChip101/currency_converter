@@ -15,13 +15,13 @@ void RenderCurrencyLists(SDL_Renderer *renderer) {
     SDL_FRect left_list;
     left_list.x = 31;
     left_list.y = 70;
-    left_list.w = 41;
+    left_list.w = 48;
     left_list.h = 170;
 
     SDL_FRect right_list;
     right_list.x = 211;
     right_list.y = 70;
-    right_list.w = 41;
+    right_list.w = 48;
     right_list.h = 170;
     
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
@@ -37,13 +37,13 @@ void RenderCurrencyLists(SDL_Renderer *renderer) {
     SDL_FRect left_selector;
     left_selector.x = 37;
     left_selector.y = 148;
-    left_selector.w = 29;
+    left_selector.w = 36;
     left_selector.h = 12;
 
     SDL_FRect right_selector;
     right_selector.x = 217;
     right_selector.y = 148;
-    right_selector.w = 29;
+    right_selector.w = 36;
     right_selector.h = 12;
 
     SDL_SetRenderDrawColor(renderer, 0, 115, 255, SDL_ALPHA_OPAQUE);

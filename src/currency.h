@@ -15,6 +15,6 @@ extern int selected_output_index;
 
 extern bool left_right_selection;
 
-void InitCurrency(std::string token);
+void InitCurrency();
 
 #endif

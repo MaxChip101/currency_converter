@@ -15,21 +15,8 @@ static SDL_Renderer *renderer = NULL;
 #define WINDOW_HEIGHT 260
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
-
-  std::ifstream token_file("token.txt");
-
-  if (!token_file.is_open()) {
-      SDL_Log("Failed to find token file");
-      return SDL_APP_FAILURE;
-  }
-
-  std::string token;
-
-  std::getline(token_file, token);
-
-  token_file.close();
-
-  InitCurrency(token);
+  
+  InitCurrency();
 
   SDL_SetAppMetadata("Currency Converter", "0.0.1",
                      "github.com/MaxChip101/currency_converter");

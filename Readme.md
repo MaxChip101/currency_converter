@@ -6,13 +6,7 @@
 
 #### About
 
-Currency Converter is a currency converter that can convert currencies from other countries to currencies from another country. Currency Converter uses [this api](app.exchangerate-api.com).
-
----
-
-#### Usage
-
-This currency converter needs a token.txt file with a token from [here](app.exchangerate-api.com) In order to work.
+Currency Converter is a currency converter that can convert currencies from other countries to currencies from another country. Currency Converter uses [this api](developer.coingate.com).
 
 ---
 

@@ -24,17 +24,16 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
     return totalSize;
 }
 
-void InitCurrency(std::string key) {
+void InitCurrency() {
     CURL* curl = curl_easy_init();
     std::string response;
 
     if (curl) {
-        std::string url = "https://v6.exchangerate-api.com/v6/" + key + "/latest/USD";
+        std::string url = "https://api.coingate.com/v2/rates/merchant";
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "CurrencyConverter/1.0");
-        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
         curl_easy_setopt(curl, CURLOPT_CAINFO, "cacert.pem");
 
         CURLcode res = curl_easy_perform(curl);
@@ -48,8 +47,8 @@ void InitCurrency(std::string key) {
     nlohmann::json data = nlohmann::json::parse(response);
 
     nlohmann::json::iterator it;
-    for (it = data["conversion_rates"].begin(); it != data["conversion_rates"].end(); it++) {
-        double value = it.value().get<double>();
+    for (it = data["BTC"].begin(); it != data["BTC"].end(); it++) {
+        double value = std::stod(it.value().get<std::string>());
         currency_rates.push_back(value);
         currency_codes.push_back(it.key());
     }

@@ -9,11 +9,10 @@ extern std::string input;
 extern double input_number;
 extern double output;
 
-extern std::string selected_input_currency;
-extern std::string selected_output_currency;
-
-extern std::string base;
-extern std::map<std::string, double> rates;
+extern std::vector<std::string> currency_codes;
+extern std::vector<double> currency_rates;
+extern int selected_input_index;
+extern int selected_output_index;
 
 extern bool left_right_selection;
 

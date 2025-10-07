@@ -13,7 +13,7 @@ static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
 #define WINDOW_WIDTH 380
-#define WINDOW_HEIGHT 380
+#define WINDOW_HEIGHT 260
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
 
@@ -40,7 +40,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     return SDL_APP_FAILURE;
   }
 
-  if (!SDL_CreateWindowAndRenderer("HangMan Game", WINDOW_WIDTH, WINDOW_HEIGHT,
+  if (!SDL_CreateWindowAndRenderer("Currency Converter", WINDOW_WIDTH, WINDOW_HEIGHT,
                                    0, &window, &renderer)) {
     SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
     return SDL_APP_FAILURE;
@@ -60,7 +60,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
       switch (event->key.scancode) {
         case SDL_SCANCODE_RETURN:
           input_number = std::stod(input);
-          output = input_number * (rates[selected_output_currency] / rates[selected_output_currency]);
+          output = input_number * (currency_rates[selected_input_index] / currency_rates[selected_output_index]);
           break;
         case SDL_SCANCODE_BACKSPACE:
           input.pop_back();
@@ -143,6 +143,26 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
           }
           input.push_back('9');
           break;
+        case SDL_SCANCODE_LEFT:
+          left_right_selection = !left_right_selection;
+          break;
+        case SDL_SCANCODE_RIGHT:
+          left_right_selection = !left_right_selection;
+          break;
+        case SDL_SCANCODE_UP:
+          if (left_right_selection && selected_output_index + 1 < currency_codes.size()) {
+            selected_output_index += 1;
+          } else if (!left_right_selection && selected_input_index + 1 < currency_codes.size()) {
+            selected_input_index += 1;
+          }
+          break;
+        case SDL_SCANCODE_DOWN:
+          if (left_right_selection && selected_output_index - 1 >= 0) {
+            selected_output_index -= 1;
+          } else if (!left_right_selection && selected_input_index - 1 >= 0) {
+            selected_input_index -= 1;
+          }
+          break;
       }
       break;
     default:
@@ -160,6 +180,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
   // rendering
   RenderBackground(renderer);
   RenderCurrencyLists(renderer);
+  RenderListBorders(renderer);
   RenderNumberInput(renderer);
   RenderNumberOutput(renderer);
   SDL_RenderPresent(renderer);

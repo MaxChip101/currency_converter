@@ -6,6 +6,7 @@
 #include <SDL3/SDL_main.h>
 #include <nlohmann/json.hpp>
 #include <print>
+#include <vector>
 #include <string>
 
 using json = nlohmann::json;
@@ -14,10 +15,11 @@ std::string input = "0";
 double input_number = 0;
 double output = 0;
 
-std::string selected_input_currency = "USD";
-std::string selected_output_currency = "USD";
-std::string base = "";
-std::map<std::string, double> rates;
+std::vector<std::string> currency_codes;
+std::vector<double> currency_rates;
+int selected_input_index = 0;
+int selected_output_index = 0;
+
 
 bool left_right_selection = false;
 
@@ -47,13 +49,11 @@ void InitCurrency(std::string key) {
 
     json data = json::parse(response);
 
-    base = data["base_code"].get<std::string>();
-    
     json::iterator it;
     for (it = data["conversion_rates"].begin(); it != data["conversion_rates"].end(); it++) {
         double value = it.value().get<double>();
-        rates[it.key()] = value;
-        SDL_Log(it.key().c_str());
+        currency_rates.push_back(value);
+        currency_codes.push_back(it.key());
     }
 
 }

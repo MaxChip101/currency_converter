@@ -34,6 +34,9 @@ void InitCurrency(std::string key) {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "CurrencyConverter/1.0");
+        curl_easy_setopt(curl, CURLOPT_CAINFO, "curl-ca-bundle.crt");
+        curl_easy_setopt(curl, CURLOPT_CAINFO, "cacert.pem");
+
         CURLcode res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
             SDL_Log("curl error: %s\n", curl_easy_strerror(res));

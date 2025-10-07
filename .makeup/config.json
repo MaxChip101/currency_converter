@@ -47,7 +47,7 @@
 						"format": "bin/obj/linux/*",
 						"cache": true
 					},
-					"template": "g++ {wildcard} -Llib/sdl/lib -lSDL3 -o bin/linux/currency_converter",
+					"template": "g++ {wildcard} -Llib/sdl/lib -lSDL3 -lcurl -o bin/linux/currency_converter",
 					"next-profile": "",
 					"condition": 0
 				},
@@ -60,7 +60,7 @@
 						"format": "bin/obj/windows/*",
 						"cache": true
 					},
-					"template": "x86_64-w64-mingw32-g++ {wildcard} -Llib/sdl/lib -lSDL3 -static-libgcc -static-libstdc++ -mwindows -o bin/windows/currency_converter.exe",
+					"template": "x86_64-w64-mingw32-g++ {wildcard} -Llib/sdl/lib -lSDL3 -lcurl -static-libgcc -static-libstdc++ -mwindows -o bin/windows/currency_converter.exe",
 					"next-profile": "",
 					"condition": 0
 				}

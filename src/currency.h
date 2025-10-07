@@ -5,13 +5,18 @@
 #include <vector>
 #include <map>
 
-extern float input;
-extern float output;
+extern std::string input;
+extern double input_number;
+extern double output;
 
 extern std::string selected_input_currency;
 extern std::string selected_output_currency;
 
-std::string base;
-std::map<std::string, float> rates;
+extern std::string base;
+extern std::map<std::string, double> rates;
+
+extern bool left_right_selection;
+
+void InitCurrency(std::string token);
 
 #endif

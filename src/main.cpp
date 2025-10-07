@@ -6,18 +6,34 @@
 #include <ctime>
 #include <fstream>
 
+#include "currency.h"
 #include "renderer.h"
 
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+#define WINDOW_WIDTH 380
+#define WINDOW_HEIGHT 380
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
 
-  SDL_SetAppMetadata("HangMan Game", "0.0.1",
-                     "github.com/MaxChip101/hangman_game");
+  std::ifstream token_file("token.txt");
+
+  if (!token_file.is_open()) {
+      SDL_Log("Failed to find token file");
+      return SDL_APP_FAILURE;
+  }
+
+  std::string token;
+
+  std::getline(token_file, token);
+
+  token_file.close();
+
+  InitCurrency(token);
+
+  SDL_SetAppMetadata("Currency Converter", "0.0.1",
+                     "github.com/MaxChip101/currency_converter");
   
   if (!SDL_Init(SDL_INIT_VIDEO)) {
     SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
@@ -29,6 +45,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
     return SDL_APP_FAILURE;
   }
+
   srand(time(NULL));
 
   return SDL_APP_CONTINUE;
@@ -42,43 +59,89 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
     case SDL_EVENT_KEY_DOWN:
       switch (event->key.scancode) {
         case SDL_SCANCODE_RETURN:
-          // convert
+          input_number = std::stod(input);
+          output = input_number * (rates[selected_output_currency] / rates[selected_output_currency]);
           break;
         case SDL_SCANCODE_BACKSPACE:
-          // remove last number
+          input.pop_back();
+          if (input == "") {
+            input = "0";
+          }
           break;
         case SDL_SCANCODE_PERIOD:
-          // enter decimal form
+          if (input.find('.') == std::string::npos) {
+            input.push_back('.');
+          }
           break;
         case SDL_SCANCODE_0:
-          // enter 0
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '0';
+            break;
+          }
+          input.push_back('0');
           break;
         case SDL_SCANCODE_1:
-          // enter 1
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '1';
+            break;
+          }
+          input.push_back('1');
           break;
         case SDL_SCANCODE_2:
-          // enter 2
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '2';
+            break;
+          }
+          input.push_back('2');
           break;
         case SDL_SCANCODE_3:
-          // enter 3
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '3';
+            break;
+          }
+          input.push_back('3');
           break;
         case SDL_SCANCODE_4:
-          // enter 4
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '4';
+            break;
+          }
+          input.push_back('4');
           break;
         case SDL_SCANCODE_5:
-          // enter 5
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '5';
+            break;
+          }
+          input.push_back('5');
           break;
         case SDL_SCANCODE_6:
-          // enter 6
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '6';
+            break;
+          }
+          input.push_back('6');
           break;
         case SDL_SCANCODE_7:
-          // enter 7
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '7';
+            break;
+          }
+          input.push_back('7');
           break;
         case SDL_SCANCODE_8:
-          // enter 8
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '8';
+            break;
+          }
+          input.push_back('8');
           break;
         case SDL_SCANCODE_9:
-          // enter 9
+          if (input.size() <= 1 && input[0] == '0') {
+            input[0] = '9';
+            break;
+          }
+          input.push_back('9');
           break;
       }
       break;
@@ -96,8 +159,9 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 
   // rendering
   RenderBackground(renderer);
-
-  RenderState(renderer);
+  RenderCurrencyLists(renderer);
+  RenderNumberInput(renderer);
+  RenderNumberOutput(renderer);
   SDL_RenderPresent(renderer);
 
   return SDL_APP_CONTINUE;

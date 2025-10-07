@@ -60,7 +60,7 @@
 						"format": "bin/obj/windows/*",
 						"cache": true
 					},
-					"template": "x86_64-w64-mingw32-g++ {wildcard} -Llib/sdl/lib -lSDL3 -lcurl -static-libgcc -static-libstdc++ -mwindows -o bin/windows/currency_converter.exe",
+					"template": "x86_64-w64-mingw32-g++ {wildcard} -Llib/sdl/lib -L/usr/x86_64-w64-mingw32/sys-root/mingw/lib -lSDL3 -lcurl -static-libgcc -static-libstdc++ -mwindows -o bin/windows/currency_converter.exe",
 					"next-profile": "",
 					"condition": 0
 				}
